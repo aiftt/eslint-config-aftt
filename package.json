@@ -1,4 +1,5 @@
 {
+  "version": "0.0.0",
   "name": "eslint-config-aftt",
   "main": "./eslintrc.js",
   "license": "MIT",
@@ -49,10 +50,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/aiftt/eslint-config-aftt"
+    "url": "git@github.com:aiftt/eslint-config-aftt.git"
   },
   "scripts": {
-    "lint": "eslint --report-unused-disable-directives ."
+    "lint": "eslint --report-unused-disable-directives .",
+    "semantic-release": "semantic-release"
   },
   "devDependencies": {
     "@types/node": "^18.11.9",
@@ -62,5 +64,4 @@
     "husky": "^8.0.2",
     "semantic-release": "^19.0.5",
     "typescript": "^4.9.3"
-  }
-}
+  },
