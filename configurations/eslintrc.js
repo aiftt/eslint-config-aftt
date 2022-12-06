@@ -523,16 +523,26 @@ module.exports = {
     'unicorn/prefer-reflect-apply': 'error',
     // 当检测正则是否匹配时使用 .test()，只有在需要更多返回值的时候使用 match(),exec()
     'unicorn/prefer-regexp-test': 'error',
-    'unicorn/prefer-set-has': 0,
-    'unicorn/prefer-spread': 0,
-    'unicorn/prefer-string-replace-all': 2,
-    'unicorn/prefer-string-slice': 2,
-    'unicorn/prefer-string-starts-ends-with': 2,
-    'unicorn/prefer-string-trim-start-end': 2,
-    'unicorn/prefer-switch': 0,
-    'unicorn/prefer-ternary': 0,
-    'unicorn/prefer-top-level-await': 0,
-    'unicorn/prefer-type-error': 2,
+    'unicorn/prefer-set-size': 'off',
+    'unicorn/prefer-set-has': 'off',
+    // 强制使用展开符，no: array.slice(), ok: [...array]
+    'unicorn/prefer-spread': 'error',
+    // 强制使用 replaceAll() 进行正则替换，而不是 `g` 标记
+    'unicorn/prefer-string-replace-all': 'error',
+    // 强制使用 .slice(startIndex, endIndex) 来过滤出子串
+    'unicorn/prefer-string-slice': 'error',
+    // 强制使用 .startsWith(), .endsWith() 来检查是不是以什么开头和结尾的，而不是用正则
+    'unicorn/prefer-string-starts-ends-with': 'error',
+    // 强制使用 .trimStart() 和 .trimEnd()，因为 .trimLeft(), .trimRight() 是它们的别名
+    'unicorn/prefer-string-trim-start-end': 'error',
+    // 超过5个 if...else if 强制使用 switch...case
+    'unicorn/prefer-switch': ["error", { "minimumCases": 6 }],
+    'unicorn/prefer-ternary': 'off',
+    'unicorn/prefer-top-level-await': 'off',
+    // 强制在检查类型的代码中抛出的错误必须时 TypeError
+    'unicorn/prefer-type-error': 'error',
+    // 强制不能使用缩写，更多的缩写检查请看
+    // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/rules/shared/abbreviations.js
     'unicorn/prevent-abbreviations': [
       2,
       {
@@ -546,8 +556,10 @@ module.exports = {
         },
       },
     ],
-    'unicorn/relative-url-style': [2, 'never'],
-    'unicorn/require-array-join-separator': 2,
+    // new URL('./file.js') 的时候不需要 `./` 直接 new URL('file.js')
+    'unicorn/relative-url-style': ['error', 'never'],
+    // 强制 .join(splitter) 的时候制定连接符
+    'unicorn/require-array-join-separator': 'error',
     'unicorn/require-number-to-fixed-digits-argument': 2,
     'unicorn/require-post-message-target-origin': 2,
     'unicorn/string-content': 0,
