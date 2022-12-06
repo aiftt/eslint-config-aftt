@@ -375,47 +375,80 @@ module.exports = {
     'unicorn/no-abusive-eslint-disable': 'error',
     'unicorn/no-array-callback-reference': 'off',
     'unicorn/no-array-for-each': 'warn',
-    'unicorn/no-array-method-this-argument': 2,
-    'unicorn/no-array-push-push': 0,
+    // 强制在数组内置遍历回掉中不允许使用 this
+    'unicorn/no-array-method-this-argument': 'error',
+    'unicorn/no-array-push-push': 'off',
     'unicorn/no-array-reduce': [
       'error',
       {
         allowSimpleOperations: true,
       },
     ],
-    'unicorn/no-await-expression-member': 0,
-    'unicorn/no-console-spaces': 0,
-    'unicorn/no-document-cookie': 2,
-    'unicorn/no-empty-file': 2,
-    'unicorn/no-for-loop': 2,
-    'unicorn/no-hex-escape': 2,
-    'unicorn/no-instanceof-array': 2,
-    'unicorn/no-invalid-remove-event-listener': 2,
-    'unicorn/no-keyword-prefix': 0,
-    'unicorn/no-lonely-if': 2,
-    'unicorn/no-nested-ternary': 2,
-    'unicorn/no-new-array': 2,
-    'unicorn/no-new-buffer': 2,
-    'unicorn/no-null': 0,
-    'unicorn/no-object-as-default-parameter': 2,
-    'unicorn/no-process-exit': 0,
-    'unicorn/no-static-only-class': 2,
-    'unicorn/no-thenable': 2,
-    'unicorn/no-this-assignment': 2,
-    'unicorn/no-unreadable-array-destructuring': 0,
-    'unicorn/no-unreadable-iife': 2,
-    'unicorn/no-unsafe-regex': 2,
-    'unicorn/no-unused-properties': 2,
-    'unicorn/no-useless-fallback-in-spread': 2,
-    'unicorn/no-useless-length-check': 2,
-    'unicorn/no-useless-promise-resolve-reject': 2,
-    'unicorn/no-useless-spread': 2,
-    'unicorn/no-useless-switch-case': 2,
-    'unicorn/no-useless-undefined': 0,
-    'unicorn/no-zero-fractions': 2,
-    'unicorn/number-literal-case': 2,
+    // 不允许直接在 await 语句后面取值
+    'unicorn/no-await-expression-member': 'error',
+    'unicorn/no-console-spaces': 'off',
+    // 不允许直接使用 document.cookie，请使用
+    // https://developer.mozilla.org/en-US/docs/Web/API/Cookie_Store_API
+    // 或 https://www.npmjs.com/search?q=cookie
+    'unicorn/no-document-cookie': 'error',
+    'unicorn/no-empty-file': 'error',
+    'unicorn/no-for-loop': 'off',
+    // 使用 Unicode 取代 16进制, '\x1B' -> '\u001B'
+    'unicorn/no-hex-escape': 'error',
+    // 使用 Array.isArray() 取代 arr instanceof Array
+    'unicorn/no-instanceof-array': 'error',
+    // removeEventListener 中不能使用无意义的或空函数回掉
+    'unicorn/no-invalid-remove-event-listener': 'error',
+    'unicorn/no-keyword-prefix': 'off',
+    // 合并多余的条件判断
+    'unicorn/no-lonely-if': 'error',
+    // 在只有 if...else 的时候，让 true 条件总是在前面
+    // no: if (!a)... else, ok: if(a) ... else
+    // 'unicorn/no-nested-condition': 'error',
+    // 允许 a ? b ? false : true : false, 不允许时必须加括号：a ? (b ? false : true) : false
+    'unicorn/no-nested-ternary': 'off',
+    // 不能直接使用 new Array() 创建数组，可以通过字面量或 Array.from({length})
+    'unicorn/no-new-array': 'error',
+    // new Buffer() 已经废弃了，请使用 Buffer.from() 和 Buffer.alloc()
+    'unicorn/no-new-buffer': 'error',
+    'unicorn/no-null': 'off',
+    'unicorn/no-object-as-default-parameter': 'off',
+    // 不允许使用 process.exit() 只能在 /usr/bin/env node 脚本中使用
+    'unicorn/no-process-exit': 'error',
+    // 不允许使用只有静态属性 class，可以用对象字面量替代
+    'unicorn/no-static-only-class': 'error',
+    // 不允许在对象中使用 then() 函数
+    'unicorn/no-thenable': 'error',
+    // 强制直接使用 this，而不是保存引用，函数可以使用箭头函数然后在函数内部使用this
+    'unicorn/no-this-assignment': 'error',
+    // 直接和 undefined 比较就行了，没必要使用 typeof
+    'unicorn/no-typeof-undefined': 'error',
+    // 有时候挺方便的
+    'unicorn/no-unreadable-array-destructuring': 'off',
+    // 代码可读性差
+    'unicorn/no-unreadable-iife': 'error',
+    'unicorn/no-unsafe-regex': 'error',
+    'unicorn/no-unused-properties': 'off',
+    // 不需要无意义的展开符
+    'unicorn/no-useless-fallback-in-spread': 'error',
+    // 不需要无意义的数组长度检测
+    // no: if (arr.length === 0 || arr.every(Boolean))
+    // ok: if (arr.every(Boolean))
+    'unicorn/no-useless-length-check': 'error',
+    // 在 async 函数中不需要返回无意义的 Promise.reject() 或 Promise.resolve()
+    // 因为 async 函数返回值默认会进行 Promise 化
+    'unicorn/no-useless-promise-resolve-reject': 'error',
+    // 无意义的展开符
+    'unicorn/no-useless-spread': 'error',
+    'unicorn/no-useless-switch-case': 'error',
+    'unicorn/no-useless-undefined': 'off',
+    // js 中没有浮点数的概念，因此没必要使用 1.0 之类的，直接使用 1 就行
+    'unicorn/no-zero-fractions': 'error',
+    // 在使用进制数字的时候，进制标识小写，no: 0XFF, ok: 0xFF
+    'unicorn/number-literal-case': 'error',
+    // 正确使用数字分隔符
     'unicorn/numeric-separators-style': [
-      2,
+      'error',
       {
         number: {
           groupLength: 3,
@@ -423,31 +456,73 @@ module.exports = {
         },
       },
     ],
-    'unicorn/prefer-add-event-listener': 0,
-    'unicorn/prefer-array-find': 2,
-    'unicorn/prefer-array-flat': 2,
-    'unicorn/prefer-array-flat-map': 2,
-    'unicorn/prefer-array-index-of': 2,
-    'unicorn/prefer-array-some': 2,
-    'unicorn/prefer-at': 0,
-    'unicorn/prefer-code-point': 2,
-    'unicorn/prefer-date-now': 2,
-    'unicorn/prefer-default-parameters': 2,
-    'unicorn/prefer-export-from': 2,
-    'unicorn/prefer-includes': 2,
-    'unicorn/prefer-json-parse-buffer': 2,
-    'unicorn/prefer-math-trunc': 2,
-    'unicorn/prefer-modern-math-apis': 2,
-    'unicorn/prefer-native-coercion-functions': 2,
-    'unicorn/prefer-negative-index': 0,
-    'unicorn/prefer-number-properties': 2,
-    'unicorn/prefer-object-from-entries': 2,
-    'unicorn/prefer-object-has-own': 0,
-    'unicorn/prefer-optional-catch-binding': 2,
-    'unicorn/prefer-prototype-methods': 0,
-    'unicorn/prefer-query-selector': 2,
-    'unicorn/prefer-reflect-apply': 2,
-    'unicorn/prefer-regexp-test': 2,
+    'unicorn/prefer-add-event-listener': 'off',
+    // 查找数组元素时候，强制使用 find, 而不是 filter(...)[0] 之类
+    'unicorn/prefer-array-find': 'error',
+    // 数组扁平化直接使用内置方法，什么 reduce, lodash 没必要了
+    'unicorn/prefer-array-flat': 'error',
+    // 能直接使用内置 flatMap 时候就不要用什么 arr.map().flat()
+    'unicorn/prefer-array-flat-map': 'error',
+    // 查找元素索引时候尽量使用 indexOf 或 lastIndexOf
+    'unicorn/prefer-array-index-of': 'error',
+    // 当检测数组中某些元素是否满足什么条件的时候直接使用 .some
+    'unicorn/prefer-array-some': 'error',
+    // 可能很多人都还不知道呢
+    'unicorn/prefer-at': 'off',
+    // '🦄'.charCodeAt(0).toString(16) -> '🦄'.codePointAt(0).toString(16)
+    // String.fromCharCode(0x1f984)    -> String.fromCodePoint(0x1f984)
+    'unicorn/prefer-code-point': 'error',
+    // 直接使用 Date.now() 取当前时间
+    'unicorn/prefer-date-now': 'error',
+    // 强制使用默认参数，而不是怪异的 foo = foo || 'foo'
+    'unicorn/prefer-default-parameters': 'error',
+    // 强制使用功能更强的 append(dom, ...otherElements), 而不是 appendChild
+    // append 不仅可以添加DOM元素，还可以添加字符串(当作 TextNode)
+    'unicorn/prefer-dom-node-append': 'error',
+    // 对于 dataset 属性，直接使用 dataset.propName 进行取值设值
+    'unicorn/prefer-dom-node-dataset': 'error',
+    // 强制使用 node.remove() 来删除该节点，而不是 node.parentNode.removeChild(node)
+    'unicorn/prefer-dom-node-remove': 'error',
+    // 强制使用 node.textContent 进行文本节点操作(而不是innerText)
+    'unicorn/prefer-dom-node-text-content': 'error',
+    // 强制使用 EventTarget 因为它即支持 node 也支持浏览器，而 EventEmitter 只能在 node 中使用
+    'unicorn/prefer-event-target': 'error',
+    // 在导出时，直接使用 export ... from 'file.js' 而不是做无意义的先导入再导出
+    'unicorn/prefer-export-from': 'error',
+    // 在检查数组是否包含哪个元素时使用 includes
+    'unicorn/prefer-includes': 'error',
+    'unicorn/prefer-json-parse-buffer': 'error',
+    // 保证 key 和 keyCode 都能用
+    'unicorn/prefer-keyboard-event-key': 'off',
+    // 位运算实际项目中都很少人用，就不做限制了
+    'unicorn/prefer-math-trunc': 'off',
+    // 强制使用新 api 替代旧的，before(),insertBefore(),replaceWith() -> replaceChild()
+    // before(), after(), append(), prepend() -> insertAdjacentText(), insertAdjacentElement()
+    'unicorn/prefer-modern-dom-apis': 'error',
+    'unicorn/prefer-modern-math-apis': 'error',
+    'unicorn/prefer-module': 'off',
+    // 直接使用 String, Number, BigInt, Boolean, and Symbol
+    // no: toBool = (val) => Boolean(val), ok: Boolean(val)
+    'unicorn/prefer-native-coercion-functions': 'error',
+    // foo.slice(foo.length - 2, foo.length - 1); -> slice(-2, -1)
+    'unicorn/prefer-negative-index': 'off',
+    'unicorn/prefer-number-properties': 'error',
+    // 使用 Node 内置包时加上 `node:`, 如：import fs from 'node:fs'
+    'unicorn/prefer-node-protocol': 'error',
+    // 强制使用 Number.parseInt, Number.isNaN
+    'unicorn/prefer-number-properties': 'error',
+    // 强制使用 Object.fromEntries(pairs) 或 new Map(pairs)
+    'unicorn/prefer-object-from-entries': 'error',
+    'unicorn/prefer-object-has-own': 'off',
+    // 当 catch(error) 的参数 error 没有用到时候，直接使用新语法 try {} catch {}
+    'unicorn/prefer-optional-catch-binding': 'error',
+    'unicorn/prefer-prototype-methods': 'off',
+    // 强制使用 querySelector, querySelectorAll 替换 getElementById, getElementsByClassName
+    // getElementsByTagName, getElementsByClassName
+    'unicorn/prefer-query-selector': 'error',
+    'unicorn/prefer-reflect-apply': 'error',
+    // 当检测正则是否匹配时使用 .test()，只有在需要更多返回值的时候使用 match(),exec()
+    'unicorn/prefer-regexp-test': 'error',
     'unicorn/prefer-set-has': 0,
     'unicorn/prefer-spread': 0,
     'unicorn/prefer-string-replace-all': 2,
