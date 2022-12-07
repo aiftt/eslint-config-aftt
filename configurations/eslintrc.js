@@ -562,10 +562,15 @@ module.exports = {
     'unicorn/require-array-join-separator': 'error',
     // 强制使用 Number.toFixed() 的时候必须传精度值
     'unicorn/require-number-to-fixed-digits-argument': 'error',
+    // 强制使用 window.postMessage(message, origin) 时候加上域名
     'unicorn/require-post-message-target-origin': 2,
-    'unicorn/string-content': 0,
-    'unicorn/template-indent': 2,
-    'unicorn/text-encoding-identifier-case': 2,
-    'unicorn/throw-new-error': 2,
+    'unicorn/string-content': 'off',
+    // 自动格式化字符串模板的缩进
+    'unicorn/template-indent': 'error',
+    // 强制统一 fs.readFile(file, encoder), buffer.toString(encoder) 使用时传递的编码
+    // 为 'utf8' 和 'ascii', 如：fs.readFile(file, 'utf8'), buffer.toString('utf8')
+    'unicorn/text-encoding-identifier-case': 'error',
+    // 强制在 throw 错误的时候使用 new，no: throw Error(), ok：throw new Error()
+    'unicorn/throw-new-error': 'error',
   },
 }
