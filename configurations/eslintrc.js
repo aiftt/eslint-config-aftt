@@ -560,7 +560,8 @@ module.exports = {
     'unicorn/relative-url-style': ['error', 'never'],
     // 强制 .join(splitter) 的时候制定连接符
     'unicorn/require-array-join-separator': 'error',
-    'unicorn/require-number-to-fixed-digits-argument': 2,
+    // 强制使用 Number.toFixed() 的时候必须传精度值
+    'unicorn/require-number-to-fixed-digits-argument': 'error',
     'unicorn/require-post-message-target-origin': 2,
     'unicorn/string-content': 0,
     'unicorn/template-indent': 2,
