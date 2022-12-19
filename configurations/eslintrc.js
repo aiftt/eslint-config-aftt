@@ -364,6 +364,7 @@ module.exports = {
     // 关闭数组长度检测
     'unicorn/explicit-length-check': 'off',
     'unicorn/filename-case': 'off',
+    // DEPECATED
     // 'unicorn/import-index': 'error',
     // 导入模块风格
     'unicorn/import-style': 'off',
@@ -536,7 +537,7 @@ module.exports = {
     // 强制使用 .trimStart() 和 .trimEnd()，因为 .trimLeft(), .trimRight() 是它们的别名
     'unicorn/prefer-string-trim-start-end': 'error',
     // 超过5个 if...else if 强制使用 switch...case
-    'unicorn/prefer-switch': ["error", { "minimumCases": 6 }],
+    'unicorn/prefer-switch': ['error', { minimumCases: 6 }],
     'unicorn/prefer-ternary': 'off',
     'unicorn/prefer-top-level-await': 'off',
     // 强制在检查类型的代码中抛出的错误必须时 TypeError
@@ -572,5 +573,33 @@ module.exports = {
     'unicorn/text-encoding-identifier-case': 'error',
     // 强制在 throw 错误的时候使用 new，no: throw Error(), ok：throw new Error()
     'unicorn/throw-new-error': 'error',
+    // 强制使用 isNaN 进行 NaN 比较
+    'use-isnan': 'error',
+    // 检测右边的参考类型字符串是否正确，且强制使用对象类型字符串
+    'valid-typeof': [
+      'error',
+      {
+        requireStringLiterals: true,
+      },
+    ],
+    // 强制变量在作用域顶部声明
+    'vars-on-top': 'error',
+    'wrap-iife': [2, 'inside'],
+    // (/test/) ？多余
+    'wrap-regex': 'off',
+    // ok: function* generator()
+    // ok: yield* other()
+    'yield-star-spacing': [
+      'error',
+      {
+        after: true,
+        before: false,
+      },
+    ],
+    // ok: if (val === 'red'), no: if ('red' === val)
+    'yoda': ['error', 'never'],
+  },
+  settings: {
+    'import/extensions': ['.js', '.jsx', '.mjs', '.ts', '.tsx'],
   },
 }

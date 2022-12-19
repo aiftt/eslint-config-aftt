@@ -54,7 +54,8 @@
   },
   "scripts": {
     "lint": "eslint --report-unused-disable-directives .",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "test": "ava --verbose --serial"
   },
   "devDependencies": {
     "@types/node": "^18.11.9",
